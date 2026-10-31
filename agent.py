@@ -24,7 +24,12 @@ SERVER = StdioServerParameters(
 )
 
 SYSTEM_PROMPT = """You are an HR benefits assistant for employees.
-Use the tools to answer questions. Keep answers short and clear."""
+Use the tools to answer questions. Keep answers short and clear.
+Rules:
+- Answer only from the tool results. Never use outside knowledge.
+- If the tools return no results, an error, or nothing relevant, say:
+  "I don't know. Please contact HR."
+- Never guess a claim status. If a claim is not found, say so."""
 
 
 def to_openai_tools(mcp_tools):
