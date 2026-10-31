@@ -28,6 +28,9 @@ def test_unknown_claim_returns_error_not_crash():
     ("What is the deadline to file a dental claim?", "P6"),
     ("What is the daily meal limit when traveling?", "P7"),
     ("How long do I have to appeal a denied claim?", "P8"),
+    # Regressions caught while adding stemming: keep them fixed
+    ("How many vacation days do I get each year?", "P1"),
+    ("How long is maternity leave?", "P3"),
 ])
 def test_search_ranks_right_policy_first(question, expected_policy):
     results = search_policies(question)

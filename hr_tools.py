@@ -4,6 +4,7 @@ import re
 import sqlite3
 from pathlib import Path
 
+from nltk.stem import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -11,24 +12,51 @@ BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "data" / "claims.db"
 POLICIES_PATH = BASE_DIR / "data" / "policies.json"
 
-# Load the policies once, when this file is imported.
+MIN_SCORE = 0.25  # FIX 4: ignore matches weaker than this
+
+# FIX 3: words employees use that the policies don't
+SYNONYMS = {
+    "vacation": "paid time off pto",
+    "maternity": "parental",
+    "paternity": "parental",
+    "wfh": "remote work",
+}
+
 with open(POLICIES_PATH, encoding="utf-8") as f:
     POLICIES = json.load(f)
 
-# Build the search index once.
+# FIX 2: reduce words to their stem, so "claims" matches "claim"
+# and "traveling" matches "travel".
+stemmer = PorterStemmer()
+basic_analyzer = TfidfVectorizer(stop_words="english").build_analyzer()
+
+
+def stemmed_words(text):
+    return [stemmer.stem(word) for word in basic_analyzer(text)]
+
+
 texts = [p["title"] + ". " + p["text"] for p in POLICIES]
-vectorizer = TfidfVectorizer(stop_words="english")
+vectorizer = TfidfVectorizer(analyzer=stemmed_words)
 policy_vectors = vectorizer.fit_transform(texts)
 
 
+def expand_query(query: str) -> str:
+    """Add policy words for any employee words in the query."""
+    words = re.findall(r"[a-z]+", query.lower())
+    extra = [SYNONYMS[w] for w in words if w in SYNONYMS]
+    return " ".join([query] + extra)
+
+
 def search_policies(query: str, top_k: int = 3) -> list[dict]:
-    """Return the top_k HR policies that best match the query."""
-    query_vector = vectorizer.transform([query])
+    """Return up to top_k HR policies that match the query well enough."""
+    query_vector = vectorizer.transform([expand_query(query)])
     scores = cosine_similarity(query_vector, policy_vectors)[0]
     best = scores.argsort()[::-1][:top_k]
 
     results = []
     for i in best:
+        if scores[i] < MIN_SCORE:  # FIX 4: skip weak matches
+            continue
         results.append({
             "id": POLICIES[i]["id"],
             "title": POLICIES[i]["title"],
