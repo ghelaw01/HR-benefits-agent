@@ -1,0 +1,10 @@
+[
+  {"id": "P1", "title": "Paid time off (PTO)", "text": "Full-time employees earn 15 days of paid time off per year. Unused days roll over up to 5 days."},
+  {"id": "P2", "title": "Sick leave", "text": "Employees get 10 days of sick leave per year. A doctor's note is needed after 3 days in a row."},
+  {"id": "P3", "title": "Parental leave", "text": "New parents get 12 weeks of paid parental leave."},
+  {"id": "P4", "title": "Remote work", "text": "Employees may work remotely up to 3 days per week with manager approval."},
+  {"id": "P5", "title": "Health insurance", "text": "Coverage starts on the first day of the month after the start date."},
+  {"id": "P6", "title": "Dental claims", "text": "Dental claims must be filed within 90 days of the visit."},
+  {"id": "P7", "title": "Travel reimbursement", "text": "Submit travel expenses within 30 days with receipts. Meals are reimbursed up to $75 per day."},
+  {"id": "P8", "title": "Claim appeals", "text": "If a claim is denied, you can appeal within 60 days."}
+]

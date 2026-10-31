@@ -1,0 +1,7 @@
+openai
+mcp[cli]
+python-dotenv
+scikit-learn
+pandas
+nltk
+pytest

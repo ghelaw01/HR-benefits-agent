@@ -1,0 +1,23 @@
+[
+  {"id": 1,  "category": "policy", "question": "How many PTO days do full-time employees get?", "expected_tool": "search_policies", "expected_policy": "P1", "must_contain": ["15"]},
+  {"id": 2,  "category": "policy", "question": "How many vacation days do I get each year?", "expected_tool": "search_policies", "expected_policy": "P1", "must_contain": ["15"]},
+  {"id": 3,  "category": "policy", "question": "Can I roll over unused vacation?", "expected_tool": "search_policies", "expected_policy": "P1", "must_contain": ["5"]},
+  {"id": 4,  "category": "policy", "question": "How many sick days do I get?", "expected_tool": "search_policies", "expected_policy": "P2", "must_contain": ["10"]},
+  {"id": 5,  "category": "policy", "question": "When do I need a doctor's note?", "expected_tool": "search_policies", "expected_policy": "P2", "must_contain": ["3"]},
+  {"id": 6,  "category": "policy", "question": "How long is maternity leave?", "expected_tool": "search_policies", "expected_policy": "P3", "must_contain": ["12 weeks"]},
+  {"id": 7,  "category": "policy", "question": "How many days a week can I WFH?", "expected_tool": "search_policies", "expected_policy": "P4", "must_contain": ["3"]},
+  {"id": 8,  "category": "policy", "question": "When does my health insurance start?", "expected_tool": "search_policies", "expected_policy": "P5", "must_contain": ["first day"]},
+  {"id": 9,  "category": "policy", "question": "What is the deadline to file a dental claim?", "expected_tool": "search_policies", "expected_policy": "P6", "must_contain": ["90"]},
+  {"id": 10, "category": "policy", "question": "How long do I have to appeal a denied claim?", "expected_tool": "search_policies", "expected_policy": "P8", "must_contain": ["60"]},
+  {"id": 11, "category": "policy", "question": "What is the daily meal limit when traveling?", "expected_tool": "search_policies", "expected_policy": "P7", "must_contain": ["75"]},
+  {"id": 12, "category": "policy", "question": "How soon must I submit travel expenses?", "expected_tool": "search_policies", "expected_policy": "P7", "must_contain": ["30"]},
+  {"id": 13, "category": "claim", "question": "What is the status of claim CLM-10023?", "expected_tool": "get_claim_status", "claim_input": "CLM-10023", "expected_status": "approved", "must_contain": ["approved"]},
+  {"id": 14, "category": "claim", "question": "Status of CLM-10456 please", "expected_tool": "get_claim_status", "claim_input": "CLM-10456", "expected_status": "pending", "must_contain": ["pending"]},
+  {"id": 15, "category": "claim", "question": "Can you check clm-10789?", "expected_tool": "get_claim_status", "claim_input": "clm-10789", "expected_status": "denied", "must_contain": ["denied"]},
+  {"id": 16, "category": "claim", "question": "What's going on with claim 10456?", "expected_tool": "get_claim_status", "claim_input": "claim 10456", "expected_status": "pending", "must_contain": ["pending"]},
+  {"id": 17, "category": "claim", "question": "Check my claim CLM 10023", "expected_tool": "get_claim_status", "claim_input": "CLM 10023", "expected_status": "approved", "must_contain": ["approved"]},
+  {"id": 18, "category": "claim", "question": "What is the status of claim CLM-99999?", "expected_tool": "get_claim_status", "claim_input": "CLM-99999", "expected_status": "not found", "must_contain": ["not found"]},
+  {"id": 19, "category": "out_of_scope", "question": "What's the weather in Baltimore tomorrow?", "must_contain": []},
+  {"id": 20, "category": "out_of_scope", "question": "Who won the Super Bowl last year?", "must_contain": []},
+  {"id": 21, "category": "out_of_scope", "question": "What is the company stock price today?", "must_contain": []}
+]

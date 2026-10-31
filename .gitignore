@@ -1,0 +1,19 @@
+# Secrets: never upload your API key
+.env
+
+# Python environment and cache
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated files (recreate with: python setup_db.py)
+data/claims.db
+eval/results.csv
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
