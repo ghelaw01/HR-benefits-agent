@@ -17,8 +17,12 @@ from agent import SERVER, run_agent, to_openai_tools
 EVAL_DIR = Path(__file__).parent
 cases = json.loads((EVAL_DIR / "eval_set.json").read_text())
 
+# Ways the agent may correctly decline an out-of-scope question.
+# Extended after error analysis found valid refusals graded as failures.
 ABSTAIN_PHRASES = ["don't know", "do not know", "not sure", "can't help",
-                   "cannot help", "not able", "unable", "contact hr"]
+                   "cannot help", "not able", "unable", "contact hr",
+                   "don't have", "do not have", "only able to",
+                   "here to assist with hr", "here to help with hr"]
 
 
 def check_case(case, result):

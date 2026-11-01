@@ -57,6 +57,31 @@ and out-of-scope questions.
 retrieval, and the final answer, and assigns each failure a root cause:
 `python eval/eval_end_to_end.py` (requires an OpenAI API key).
 
+Results with `gpt-4o-mini`, each case run 3 times (63 runs per version), October 2026:
+
+| Category | v1 | v2 |
+| --- | --- | --- |
+| Policy questions | 36 of 36 | 36 of 36 |
+| Claim lookups | 12 of 18 | 18 of 18 |
+| Out of scope (after grader fix) | 8 of 9 | 9 of 9 |
+| **All runs** | **56 of 63 (89%)** | **63 of 63 (100%)** |
+
+What end-to-end error analysis added beyond the component tests:
+
+- **The model hid tool bugs, inconsistently.** After a tool error, the model sometimes
+  retried with a corrected ID (`CLM-10789`), so v1 claim cases passed 1, 2, or 3 times
+  out of 3. Flaky passes like these are why the tools are also tested alone.
+- **Query rewriting masked the search bug.** The model rewrote "dental claim" questions
+  into better search queries, so those cases passed end to end in v1, even though the
+  search tool itself ranked the wrong policy first.
+- **One real hallucination.** In one v1 run, the agent answered "Who won the Super Bowl
+  last year?" from its own outside knowledge, with outdated information. The v2 prompt
+  rules removed this: all out-of-scope runs return the fallback answer.
+- **The grader was wrong 4 times.** Valid refusals like "I'm only able to assist with
+  HR-related questions" were marked as failures. The original grader scored v1 at
+  52 of 63 (83%); after adding these refusal phrases, 56 of 63 (89%). A keyword grader
+  is brittle, so the next step is an LLM-as-judge validated against human grades.
+
 ## Run it
 
 ```bash
